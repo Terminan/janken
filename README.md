@@ -1,1 +1,2 @@
 # janken
+This project is practice for Javascript through the creation of a rock-paper-scissors game to be played in a browser console. I have chosen to use the Japanese terms for the game as a fun modification.
