@@ -1,0 +1,4 @@
+When the user inputs rock, paper, or scissors
+Generate a random value for the computer's "input"
+Compare the two to determine a winner
+Show the user a message declaring the winner (or a tie)
