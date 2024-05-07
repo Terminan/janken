@@ -10,101 +10,150 @@ function getComputerChoice() {
     }
 }
 
-function getHumanChoice() {
-    let choice = window.prompt("Saishowaguu, jankenpon! (Make a choice of rock, paper, or scissors!)");
-    switch (choice.toLowerCase()) {
+const winString = "やった! (You won!)";
+const loseString = "残念... (You lost...)";
+const tieString = "あいこでしょ! (You tied!)";
+
+let humanScore = 0;
+let computerScore = 0;
+
+function playGame(choice) {
+    let computerChoice = getComputerChoice();
+    switch (choice) {
         case "rock":
-            return "rock";
+            switch (computerChoice) {
+                case "rock":
+                    results.textContent = tieString;
+                    break;
+                case "paper":
+                    results.textContent = loseString;
+                    computerScore++;
+                    break;
+                case "scissors":
+                    results.textContent = winString;
+                    humanScore++;
+                    break;
+                default:
+                    results.textContent = "ERROR";
+            }
+            break;
         case "paper":
-            return "paper";
+            switch (computerChoice) {
+                case "rock":
+                    results.textContent = winString;
+                    humanScore++;
+                    break;
+                case "paper":
+                    results.textContent = tieString;
+                    break;
+                case "scissors":
+                    results.textContent = loseString;
+                    computerScore++;
+                    break;
+                default:
+                    results.textContent = "ERROR";
+            }
+            break;
         case "scissors":
-            return "scissors";
+            switch (computerChoice) {
+                case "rock":
+                    results.textContent = loseString;
+                    computerScore++;
+                    break;
+                case "paper":
+                    results.textContent = winString;
+                    humanScore++;
+                    break;
+                case "scissors":
+                    results.textContent = tieString;
+                    break;
+                default:
+                    results.textContent = "ERROR";
+            }
+            break;
         default:
-            window.alert("You must enter one of the three options!");
-            return "nochoice";
+            results.textContent = "ERROR";
     }
-}
-
-function playGame() {
-    let humanSelection = "rock";
-    let computerSelection = "rock";
-
-    let humanScore = 0;
-    let computerScore = 0;
-
-    function playRound(humanChoice, computerChoice) {
-        humanSelection = getHumanChoice();
-        computerSelection = getComputerChoice();
-        console.log(`Human Selection: ${humanChoice}`);
-        console.log(`Computer Selection: ${computerChoice}`);
-        switch (humanChoice) {
-            case "rock":
-                switch (computerChoice) {
-                    case "rock":
-                        console.log("Aiko desho! (You tied!)");
-                        break;
-                    case "paper":
-                        console.log("Zannen... (You lost...)");
-                        computerScore++;
-                        break;
-                    case "scissors":
-                        console.log("Yatta! (You won!)");
-                        humanScore++;
-                        break;
-                    default:
-                        console.log("Game aborted");
-                }
-                break;
-            case "paper":
-                switch (computerChoice) {
-                    case "rock":
-                        console.log("Yatta! (You won!)");
-                        humanScore++;
-                        break;
-                    case "paper":
-                        console.log("Aiko desho! (You tied!)");
-                        break;
-                    case "scissors":
-                        console.log("Zannen... (You lost...)");
-                        computerScore++;
-                        break;
-                    default:
-                        console.log("Game aborted");
-                }
-                break;
-            case "scissors":
-                switch (computerChoice) {
-                    case "rock":
-                        console.log("Zannen... (You lost...)");
-                        computerScore++;
-                        break;
-                    case "paper":
-                        console.log("Yatta! (You won!)");
-                        humanScore++;
-                        break;
-                    case "scissors":
-                        console.log("Aiko desho! (You tied!)");
-                        break;
-                    default:
-                        console.log("Game aborted");
-                }
-                break;
-            default:
-                console.log("Game aborted");
+    humanScoreText.textContent = `Player: ${humanScore}`;
+    computerScoreText.textContent = `Computer: ${computerScore}`;
+    if (humanScore === 5 || computerScore === 5) {
+        gameDiv.removeChild(title);
+        gameDiv.removeChild(instructions);
+        gameDiv.removeChild(gameButtons);
+        gameDiv.removeChild(results);
+        gameDiv.removeChild(score);
+        if (humanScore === 5) {
+            final.textContent = "You won the game!";
+        } else {
+            final.textContent = "You lost the game...";
         }
-    }
-
-    for (i = 0; i < 5; i++) {
-        playRound(humanSelection, computerSelection);
-    }
-    console.log("Final Scores");
-    console.log(`Human: ${humanScore}`);
-    console.log(`Computer: ${computerScore}`);
-    if (humanScore > computerScore) {
-        console.log("You win!");
-    } else if (humanScore < computerScore) {
-        console.log("You lost...");
-    } else {
-        console.log("You tied.");
+        gameDiv.appendChild(final);
     }
 }
+
+const gameDiv = document.querySelector(".gameContainer");
+
+const title = document.createElement("h2");
+title.classList.add("gameText");
+title.textContent = "最初はグー, じゃんけんぽん!";
+
+const instructions = document.createElement("h3");
+instructions.classList.add("gameText");
+instructions.textContent = "Select an option:";
+
+gameDiv.appendChild(title);
+gameDiv.appendChild(instructions);
+
+const gameButtons = document.createElement("div");
+gameButtons.classList.add("gameButtonContainer");
+
+const rockButton = document.createElement("button");
+rockButton.classList.add("choiceButtons");
+rockButton.textContent = "グー (Rock)";
+rockButton.addEventListener("click", () => {
+    playGame("rock");
+    console.log("Played game with rock as human choice");
+});
+
+const paperButton = document.createElement("button");
+paperButton.classList.add("choiceButtons");
+paperButton.textContent = "パー (Paper)";
+paperButton.addEventListener("click", () => {
+    playGame("paper");
+    console.log("Played game with paper as human choice");
+});
+
+const scissorsButton = document.createElement("button");
+scissorsButton.classList.add("choiceButtons");
+scissorsButton.textContent = "チョキ (Scissors)";
+scissorsButton.addEventListener("click", () => {
+    playGame("scissors");
+    console.log("Played game with scissors as human choice");
+});
+
+gameButtons.appendChild(rockButton);
+gameButtons.appendChild(paperButton);
+gameButtons.appendChild(scissorsButton); 
+
+gameDiv.appendChild(gameButtons);
+
+const results = document.createElement("h2");
+results.classList.add("results");
+
+const score = document.createElement("div");
+score.classList.add("scoreDiv");
+
+const humanScoreText = document.createElement("h3");
+humanScoreText.classList.add("scores");
+
+const computerScoreText = document.createElement("h3");
+computerScoreText.classList.add("scores");
+
+score.appendChild(humanScoreText);
+score.appendChild(computerScoreText);
+
+gameDiv.appendChild(results);
+gameDiv.appendChild(score);
+
+const final = document.createElement("div");
+final.classList.add("final");

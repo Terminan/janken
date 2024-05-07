@@ -1,3 +1,65 @@
 body {
     text-align: center;
+    color: white;
+    background-color:rgb(42, 42, 42);
+    font-family: sans-serif;
+}
+
+.gameContainer {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(99, 99, 99);
+    border: 5px solid;
+    border-radius: 10px;
+    padding: 25px 50px;
+}
+
+.gameText {
+    text-align: center;
+    color: white;
+    font-weight: 700;
+    flex-basis: 100%;
+}
+
+.gameButtonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.choiceButtons {
+    text-align: center;
+    color: white;
+    font-weight: 700;
+    background-color:rgb(42, 42, 42);
+    border: 3px solid;
+    border-radius: 25px;
+    padding: 10px;
+}
+
+.results {
+    margin-top: 50px;
+}
+
+.scoreDiv {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.scores {
+    text-align: center;
+    color: white;
+    font-weight: 700;
+}
+
+.final {
+    text-align: center;
+    color: white;
+    font-weight: 700;
+    font-size: x-large;
 }
